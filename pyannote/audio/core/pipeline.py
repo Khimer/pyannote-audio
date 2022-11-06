@@ -68,7 +68,7 @@ class Pipeline(_Pipeline):
 
         checkpoint_path = str(checkpoint_path)
 
-        if os.path.isfile(checkpoint_path):
+        if os.path.isfile(checkpoint_path) or 'params' in checkpoint_path:
             config_yml = checkpoint_path
 
         else:
@@ -112,9 +112,11 @@ If this still does not work, it might be because the pipeline is gated:
 visit https://hf.co/{model_id} to accept the user conditions."""
                 )
                 return None
-
-        with open(config_yml, "r") as fp:
-            config = yaml.load(fp, Loader=yaml.SafeLoader)
+        if not 'params' in checkpoint_path:
+            with open(config_yml, "r") as fp:
+                config = yaml.load(fp, Loader=yaml.SafeLoader)
+        else:
+            config = yaml.load(config_yml, Loader=yaml.SafeLoader)
 
         # initialize pipeline
         pipeline_name = config["pipeline"]["name"]
