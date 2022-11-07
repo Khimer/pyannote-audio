@@ -40,7 +40,7 @@ with open(version_path, "w") as f:
 
 if __name__ == "__main__":
     setup(
-        name="pyannote.audio",
+        name="test.pyannote.audio",
         namespace_packages=["pyannote"],
         version=version,
         packages=find_packages(),
